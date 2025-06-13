@@ -1,0 +1,10 @@
+{
+  "title": "Créer votre compte",
+  "firstName": "Prénom",
+  "lastName": "Nom de famille",
+  "email": "Adresse email",
+  "password": "Mot de passe",
+  "confirmPassword": "Confirmer le mot de passe",
+  "submit": "S'inscrire",
+  "login": "Déjà un compte ? Se connecter"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Reservation Details",
+  "lab": "Select Laboratory",
+  "date": "Select Date",
+  "time": "Select Time",
+  "duration": "Duration",
+  "submit": "Confirm Reservation",
+  "cancel": "Cancel",
+  "success": "Reservation Successful!"
+}

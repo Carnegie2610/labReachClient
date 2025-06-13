@@ -1,0 +1,10 @@
+{
+  "title": "Create Your Account",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email Address",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "submit": "Register",
+  "login": "Already have an account? Login"
+}

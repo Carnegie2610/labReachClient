@@ -1,0 +1,10 @@
+{
+  "title": "Détails de la réservation",
+  "lab": "Sélectionner le laboratoire",
+  "date": "Sélectionner la date",
+  "time": "Sélectionner l'heure",
+  "duration": "Durée",
+  "submit": "Confirmer la réservation",
+  "cancel": "Annuler",
+  "success": "Réservation réussie !"
+}
