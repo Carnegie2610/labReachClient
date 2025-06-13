@@ -32,11 +32,11 @@ export default async function middleware(request: NextRequest) {
   
   // If no locale cookie or already on correct path, use the next-intl middleware
   const intlMiddleware = createMiddleware({
-  defaultLocale,
-  locales,
+    defaultLocale,
+    locales,
     localePrefix: 'always',
     pathnames
-});
+  });
   
   return intlMiddleware(request);
 }
@@ -44,7 +44,7 @@ export default async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Exclude Payload admin, API routes, and CMS-like routes
-    '/((?!api|trpc|_next|_vercel|login|register|reservation|home|.*\\..*).*)',
+    '/((?!api|trpc|_next|_vercel|login|register|reservation|home|Laboratory|.*\\..*).*)',
 
     // Include these specific locale patterns
     '/',

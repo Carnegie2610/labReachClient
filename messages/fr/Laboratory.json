@@ -1,3 +1,32 @@
-{   
-    
+{
+  "Header": {
+    "title": "Laboratoire",
+    "home": "Accueil",
+    "laboratory": "Laboratoire",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "Inscription"
+  },
+  "Footer": {
+      "pages": "Pages",
+      "usefulLinks": "Useful Links",
+      "login": "Login",
+      "register": "Register",
+      "reservationManagement": "Reservation Management",
+      "contact": "Contact",
+      "support": "Support",
+      "university": "University of Buea",
+      "twitter": "Twitter",
+      "youtube": "Youtube",
+      "informative": "Informative",
+      "privacy": "Privacy",
+      "orders": "Orders",
+      "copyright": "© {year} LabReach"
+    },
+    "Laboratory": {
+      "labExercises": "Lab Exercises",
+      "exercise1": "Introduction to Titration",
+      "exercise2": "Circuit Analysis",
+      "exercise3": "Organic Synthesis"
+    }
 }
