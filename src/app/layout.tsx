@@ -1,13 +1,14 @@
+// src/app/[locale]/layout.tsx
+
 import { Outfit, Lato } from 'next/font/google';
 import './globals.css';
-import Header from '../components/organisms/Header';
-import Footer from '../components/organisms/Footer';
-// import CookieConsent from '../components/common/CookieConsent';
 import NextTopLoader from 'nextjs-toploader';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
-// import GoogleAnalyticsScript from '../../components/common/GoogleAnalyticsScript';
+// FIX 1 & 4: Use named imports with the '@' alias for consistency and correctness
+import Header  from '@/components/organisms/Header';
+import Footer from '@/components/organisms/Footer';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 const lato = Lato({ subsets: ['latin'], variable: '--font-lato', weight: ['700', '900'] });
@@ -17,28 +18,25 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { lang: string };
+  // FIX 2: Use `locale` to match the folder name `[locale]`
+  params: { locale: string };
 }) {
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  //datasectiopn clean
   const messages = await getMessages();
 
   return (
-    <html lang={params.lang}>
+    // Use `params.locale` here
+    <html lang={params.locale}>
       <body
-        className={`${outfit.variable} ${lato.variable} overflow-x-hidden bg-darkblue   font-inter`}
+        className={`${outfit.variable} ${lato.variable} flex min-h-screen flex-col bg-gray-100 font-sans`}
       >
-        <NextIntlClientProvider messages={messages}>
-          <div className="flex flex-col overflow-hidden bg-[#FBFBFB]">
+        {/* FIX 3: Pass the `locale` prop to the provider */}
+        <NextIntlClientProvider locale={params.locale} messages={messages}>
+          <div className="flex flex-1 flex-col overflow-hidden">
             <Header />
-            <NextTopLoader />
-            <main>{children}</main>
+            <NextTopLoader color="#6DD3CE" showSpinner={false} />
+            {/* The main content area should grow to fill available space */}
+            <main className="flex-grow">{children}</main>
             <Footer />
-            {/* <CookieConsent /> */}
-
-            {/* Custom Google Analytics with consent mode */}
-            {/* <GoogleAnalyticsScript /> */}
           </div>
         </NextIntlClientProvider>
       </body>

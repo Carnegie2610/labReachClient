@@ -22,9 +22,9 @@ export const pathnames = {
     en: '/register',
     fr: '/register',
   },
-  '/Laboratory': {
-    en: '/Laboratory',
-    fr: '/Laboratory',
+  '/laboratory': {
+    en: '/laboratory',
+    fr: '/laboratory',
   },
 } as const;
 

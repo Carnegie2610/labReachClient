@@ -10,24 +10,25 @@ export default async function middleware(request: NextRequest) {
   // Get locale from cookie
   const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
   
-  // Check if we need to redirect based on cookie
-  if (localeCookie && locales.includes(localeCookie as any)) {
-    // Don't redirect if already on correct locale path
-    const localePrefix = `/${localeCookie}`;
-    if (!pathname.startsWith(localePrefix) && 
-        !pathname.startsWith('/_next') && 
-        !pathname.startsWith('/login') && 
-        !pathname.startsWith('/register') && 
-        !pathname.startsWith('/reservation') && 
-        !pathname.startsWith('/trpc') &&
-        !pathname.startsWith('/courses') && // Exclude CMS-like routes
-        !pathname.includes('.')) {
-      
-      // Redirect to the localized version of the page
-      const url = new URL(request.url);
-      url.pathname = `${localePrefix}${pathname === '/' ? '' : pathname}`;
-      return NextResponse.redirect(url);
-    }
+  // Check if we need to redirect based on cookie or default locale
+  const targetLocale = localeCookie && locales.includes(localeCookie as any) 
+    ? localeCookie 
+    : defaultLocale;
+
+  // Don't redirect if already on correct locale path
+  const localePrefix = `/${targetLocale}`;
+  if (!pathname.startsWith(localePrefix) && 
+      !pathname.startsWith('/_next') && 
+      !pathname.startsWith('/login') && 
+      !pathname.startsWith('/register') && 
+      !pathname.startsWith('/reservation') && 
+      !pathname.startsWith('/Laboratory') && // Exclude CMS-like routes
+      !pathname.includes('.')) {
+    
+    // Redirect to the localized version of the page
+    const url = new URL(request.url);
+    url.pathname = `${localePrefix}${pathname === '/' ? '' : pathname}`;
+    return NextResponse.redirect(url);
   }
   
   // If no locale cookie or already on correct path, use the next-intl middleware
