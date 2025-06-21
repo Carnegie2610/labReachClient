@@ -5,7 +5,7 @@ import './globals.css';
 import NextTopLoader from 'nextjs-toploader';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-
+import { MqttProvider } from '@/context/MqttContext';
 // FIX 1 & 4: Use named imports with the '@' alias for consistency and correctness
 import Header  from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
@@ -31,6 +31,7 @@ export default async function RootLayout({
       >
         {/* FIX 3: Pass the `locale` prop to the provider */}
         <NextIntlClientProvider locale={params.locale} messages={messages}>
+          <MqttProvider>
           <div className="flex flex-1 flex-col overflow-hidden">
             <Header />
             <NextTopLoader color="#6DD3CE" showSpinner={false} />
@@ -38,6 +39,7 @@ export default async function RootLayout({
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
+          </MqttProvider>
         </NextIntlClientProvider>
       </body>
     </html>

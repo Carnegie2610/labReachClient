@@ -7,7 +7,7 @@ import { cpp } from '@codemirror/lang-cpp';
 import { Button } from '@/components/atoms/Button';
 import { ExerciseSelector } from '@/components/molecules/ExerciseSelector';
 import { labExercises, getExerciseById } from '@/lib/lab-data';
-
+import { CompileButton } from '@/components/molecules/CompileButton'
 const CodeMirror = dynamic(() => import('@uiw/react-codemirror'), { 
   ssr: false,
 });
@@ -84,9 +84,7 @@ export function LabExercise() {
         />
       </div>
       <div className="flex items-center space-x-2">
-        <Button onClick={handleCompile} isLoading={isLoading}>
-          Compile & Verify
-        </Button>
+        <CompileButton />
         {/* The reset button is now smarter */}
         <Button variant="secondary" onClick={handleResetCode}>
           Reset Code

@@ -17,6 +17,7 @@
     "clsx": "^2.1.1",
     "dompurify": "^3.2.6",
     "lucide-react": "^0.515.0",
+    "mqtt": "^5.13.1",
     "next": "15.3.3",
     "next-intl": "^4.1.0",
     "nextjs-toploader": "^3.8.16",

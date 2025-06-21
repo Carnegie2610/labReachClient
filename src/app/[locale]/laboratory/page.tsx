@@ -1,6 +1,7 @@
 // src/app/[locale]/Laboratory/page.tsx
 import { SubHeader } from '@/components/organisms/SubHeader';
 import { LabExercise } from '@/components/organisms/LabExercise';
+import { SimulationControlPanel } from '@/components/organisms/SimulationControlPanel';
 
 export default async function ({ params }: { params: { locale: string } }) {
   return (
@@ -13,6 +14,7 @@ export default async function ({ params }: { params: { locale: string } }) {
           {/* Other page content goes here */}
         </div>
         <LabExercise />
+        <SimulationControlPanel/>
       </main>       
     </div>
   );
