@@ -3,7 +3,7 @@ import { SubHeader } from '@/components/organisms/SubHeader';
 import { LabExercise } from '@/components/organisms/LabExercise';
 import { SimulationControlPanel } from '@/components/organisms/SimulationControlPanel';
 
-export default async function ({ params }: { params: { locale: string } }) {
+export default async function LaboratoryPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-grow">

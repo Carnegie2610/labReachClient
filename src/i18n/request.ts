@@ -1,8 +1,13 @@
 import { getRequestConfig } from 'next-intl/server';
-import { locales, defaultLocale } from './routing';
+import { locales, defaultLocale, Locale } from './routing';
 import { cookies } from 'next/headers';
 
-export default getRequestConfig(async ({ locale }) => {
+// Type assertion for locale
+const assertLocale = (locale: string): locale is Locale => {
+  return locales.includes(locale as Locale);
+};
+
+export default getRequestConfig(async ({ locale }: { locale?: string }) => {
   try {
     // Use the passed locale as default
     let resolvedLocale = locale || defaultLocale;
@@ -23,7 +28,7 @@ export default getRequestConfig(async ({ locale }) => {
     console.log('Resolving locale in i18n.ts:', resolvedLocale);
 
     // Validate that the incoming `locale` parameter is valid
-    if (!locales.includes(resolvedLocale as any)) {
+    if (!assertLocale(resolvedLocale)) {
       console.error('Invalid locale detected:', resolvedLocale);
       resolvedLocale = defaultLocale;
     }
@@ -42,14 +47,14 @@ export default getRequestConfig(async ({ locale }) => {
     console.log('Namespaces loaded:', namespaces);
 
     // Load all namespace messages
-    const messages: Record<string, any> = {};
-    // or more specifically:
-    // const messages: Record<string, Record<string, string>> = {};
+    const messages: Record<string, Record<string, string>> = {};
     
     for (const namespace of namespaces) {
       try {
         console.log(`Attempting to load ${namespace} for ${resolvedLocale}...`);
-        messages[namespace] = (await import(`../../messages/${resolvedLocale}/${namespace}.json`)).default;
+        // Ensure we get a plain object by using JSON.parse
+        const module = await import(`../../messages/${resolvedLocale}/${namespace}.json`);
+        messages[namespace] = JSON.parse(JSON.stringify(module.default || module));
         console.log(`Successfully loaded ${namespace} for ${resolvedLocale}`);
       } catch (error) {
         console.error(`Error loading ${namespace} for ${resolvedLocale}:`, error);

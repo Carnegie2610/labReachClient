@@ -7,17 +7,25 @@ import { useMqtt } from '@/context/MqttContext';
 const DEVICE_ID = 'esp32-alpha'; // This should ideally be dynamic if you have multiple devices
 const COMMAND_TOPIC = `labreach/sim/${DEVICE_ID}/command`;
 
-export function CompileButton() {
+interface CompileButtonProps {
+  onCompile?: () => void;
+}
+
+export function CompileButton({ onCompile }: CompileButtonProps) {
   const { publish, connectionStatus } = useMqtt();
   const isReady = connectionStatus === 'Connected';
 
   const handleCompileClick = () => {
-    // THIS IS THE ONLY CHANGE NEEDED ON THE FRONTEND
-    // We now send a command specific to the blink experiment.
-    const payload = JSON.stringify({ experiment: 'blink', count: 10 });
-    
-    console.log(`Publishing command: ${payload}`);
-    publish(COMMAND_TOPIC, payload, 1);
+    if (onCompile) {
+      onCompile();
+    } else {
+      // THIS IS THE ONLY CHANGE NEEDED ON THE FRONTEND
+      // We now send a command specific to the blink experiment.
+      const payload = JSON.stringify({ experiment: 'blink', count: 10 });
+      
+      console.log(`Publishing command: ${payload}`);
+      publish(COMMAND_TOPIC, payload, 1);
+    }
   };
 
   return (

@@ -1,7 +1,12 @@
 // middleware.ts
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale, pathnames } from './i18n/routing';
+import { locales, defaultLocale, pathnames, Locale } from './i18n/routing';
 import { NextRequest, NextResponse } from 'next/server';
+
+// Type assertion for locale
+const assertLocale = (locale: string): locale is Locale => {
+  return locales.includes(locale as Locale);
+};
 
 // Wrap the middleware to handle cookie detection
 export default async function middleware(request: NextRequest) {
@@ -11,7 +16,7 @@ export default async function middleware(request: NextRequest) {
   const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
   
   // Check if we need to redirect based on cookie or default locale
-  const targetLocale = localeCookie && locales.includes(localeCookie as any) 
+  const targetLocale = localeCookie && assertLocale(localeCookie) 
     ? localeCookie 
     : defaultLocale;
 

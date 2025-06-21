@@ -6,12 +6,21 @@ import NextTopLoader from 'nextjs-toploader';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { MqttProvider } from '@/context/MqttContext';
-// FIX 1 & 4: Use named imports with the '@' alias for consistency and correctness
-import Header  from '@/components/organisms/Header';
 import Footer from '@/components/organisms/Footer';
+import Header from '@/components/organisms/Header';
+import { ThemeProvider } from '@/provider/ThemeProvider';
 
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
-const lato = Lato({ subsets: ['latin'], variable: '--font-lato', weight: ['700', '900'] });
+const outfit = Outfit({ 
+  subsets: ['latin'], 
+  variable: '--font-outfit',
+  fallback: ['Arial', 'sans-serif']
+});
+const lato = Lato({ 
+  subsets: ['latin'], 
+  variable: '--font-lato', 
+  weight: ['700', '900'],
+  fallback: ['Arial', 'sans-serif']
+});
 
 export default async function RootLayout({
   children,
@@ -31,14 +40,18 @@ export default async function RootLayout({
       >
         {/* FIX 3: Pass the `locale` prop to the provider */}
         <NextIntlClientProvider locale={params.locale} messages={messages}>
+          
           <MqttProvider>
-          <div className="flex flex-1 flex-col overflow-hidden">
-            <Header />
+            
+            <ThemeProvider attribute="class">
+            <div className="flex flex-1 flex-col overflow-hidden">
             <NextTopLoader color="#6DD3CE" showSpinner={false} />
             {/* The main content area should grow to fill available space */}
+            <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
           </div>
+          </ThemeProvider>
           </MqttProvider>
         </NextIntlClientProvider>
       </body>

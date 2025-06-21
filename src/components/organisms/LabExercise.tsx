@@ -23,14 +23,12 @@ export function LabExercise() {
   const [code, setCode] = useState(defaultExercise.code);
   
   const [output, setOutput] = useState('// Compilation output will appear here...');
-  const [isLoading, setIsLoading] = useState(false);
-
   const handleSelectExercise = (id: string) => {
     const selected = getExerciseById(id);
     if (selected) {
       setSelectedExerciseId(id);
-      setCode(selected.code); // Update the editor with the new code
-      setOutput('// New exercise loaded. Ready to compile.'); // Reset output
+      setCode(selected.code);
+      setOutput('// New exercise loaded. Ready to compile.');
     }
   };
   
@@ -42,8 +40,6 @@ export function LabExercise() {
   };
 
   const handleCompile = async () => {
-    // ... (Your existing compile logic remains unchanged)
-    setIsLoading(true);
     setOutput('Compiling...');
     try {
       const response = await fetch('/api/compile', {
@@ -54,10 +50,10 @@ export function LabExercise() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Compilation failed');
       setOutput(`✅ Success:\n\n${result.message}`);
-    } catch (error: any) {
-      setOutput(`❌ Error:\n\n${error.message}`);
+    } catch (error) {
+      setOutput(`❌ Error:\n\n${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     } finally {
-      setIsLoading(false);
+      setOutput('Ready to compile');
     }
   };
 
@@ -84,7 +80,7 @@ export function LabExercise() {
         />
       </div>
       <div className="flex items-center space-x-2">
-        <CompileButton />
+        <CompileButton onCompile={handleCompile} />
         {/* The reset button is now smarter */}
         <Button variant="secondary" onClick={handleResetCode}>
           Reset Code
