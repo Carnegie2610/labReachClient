@@ -42,6 +42,7 @@ export default getRequestConfig(async ({ locale }: { locale?: string }) => {
       'login',
       'register',
       'Laboratory',
+      'auth',
     ];
 
     console.log('Namespaces loaded:', namespaces);

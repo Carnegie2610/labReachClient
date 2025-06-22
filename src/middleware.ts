@@ -2,13 +2,21 @@
 import createMiddleware from 'next-intl/middleware';
 import { locales, defaultLocale, pathnames, Locale } from './i18n/routing';
 import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 // Type assertion for locale
 const assertLocale = (locale: string): locale is Locale => {
   return locales.includes(locale as Locale);
 };
 
-// Wrap the middleware to handle cookie detection
+// Protected routes that require authentication
+const protectedRoutes = [
+  '/[locale]/dashboard',
+  '/[locale]/profile',
+  // Add more protected routes as needed
+];
+
+// Wrap the middleware to handle cookie detection and auth
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   
@@ -19,6 +27,19 @@ export default async function middleware(request: NextRequest) {
   const targetLocale = localeCookie && assertLocale(localeCookie) 
     ? localeCookie 
     : defaultLocale;
+
+  // Check if the route is protected
+  const isProtectedRoute = protectedRoutes.some(route => 
+    pathname.startsWith(route.replace('[locale]', targetLocale))
+  );
+
+  // Check authentication for protected routes
+  if (isProtectedRoute) {
+    const token = await getToken({ req: request });
+    if (!token) {
+      return NextResponse.redirect(new URL(`/${targetLocale}/auth/login`, request.url));
+    }
+  }
 
   // Don't redirect if already on correct locale path
   const localePrefix = `/${targetLocale}`;

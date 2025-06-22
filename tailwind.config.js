@@ -12,19 +12,19 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#271F30',
+          DEFAULT: '#271F30', // dark base, good for navbars or dark backgrounds
         },
         accent: {
-          DEFAULT: '#E35805',
+          DEFAULT: '#E3B505', // vibrant gold, best for CTAs (buttons, highlights)
         },
         secondary: {
-          DEFAULT: '#6DD3CE',
+          DEFAULT: '#6DD3CE', // teal/mint, ideal for highlights and cards
         },
         muted: {
-          DEFAULT: '#757780',
+          DEFAULT: '#757780', // grey, for secondary text or disabled states
         },
         neutral: {
-          DEFAULT: '#E2DADB',
+          DEFAULT: '#E2DADB', // light background, containers, surface
         },
       },
     },
