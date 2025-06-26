@@ -10,7 +10,7 @@ const RegisterSchema = z.object({
   fullName: z.string().min(2, { message: 'Full name is required.' }),
   role: z.enum(['student', 'instructor', 'technician']),
 });
-
+const supabase = createSupabaseServerClient();
 export async function registerUser(formData: {
   email: string;
   password: string;
@@ -24,7 +24,6 @@ export async function registerUser(formData: {
   }
 
   const { email, password, fullName, role } = validation.data;
-  const supabase = createSupabaseServerClient();
 
   // 1. Sign up the user with Supabase Auth
   const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -46,7 +45,8 @@ export async function registerUser(formData: {
   }
 
   // 2. Insert the role into your public 'users' table
-  const { error: profileError } = await supabase
+  const supabaseClient = await supabase;
+  const { error: profileError } = await supabaseClient
     .from('users')
     .insert({ id: authData.user.id, full_name: fullName, role });
 
@@ -54,7 +54,7 @@ export async function registerUser(formData: {
     // This is a critical issue, might indicate DB policy problems
     console.error('Error creating user profile:', profileError);
     // You might want to delete the auth user here to allow a retry
-    await supabase.auth.admin.deleteUser(authData.user.id);
+    await supabaseClient.auth.admin.deleteUser(authData.user.id);
     return { error: 'Could not create user profile. Please contact support.' };
   }
 

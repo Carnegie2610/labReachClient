@@ -1,16 +1,26 @@
-// src/components/molecules/LabExerciseDropdown.tsx
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react';
 import { clsx } from 'clsx';
 
-export function LabExerciseDropdown() {
+// Define the shape of the exercise data it will receive
+type Exercise = {
+  id: string;
+  title: string;
+};
+
+type ExerciseDropdownProps = {
+  exercises: Exercise[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+};
+
+export function ExerciseDropdown({ exercises, selectedId, onSelect }: ExerciseDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const t = useTranslations('Laboratory.Laboratory');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const selectedExercise = exercises.find(e => e.id === selectedId);
 
   // Close dropdown if clicked outside
   useEffect(() => {
@@ -20,49 +30,43 @@ export function LabExerciseDropdown() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [dropdownRef]);
 
-  // Placeholder data for the links
-  const exercises = [
-    { href: '/laboratory/exercise-1', label: t('exercise1') },
-    { href: '/laboratory/exercise-2', label: t('exercise2') },
-    { href: '/laboratory/exercise-3', label: t('exercise3') },
-  ];
+  const handleSelect = (id: string) => {
+    onSelect(id); // Call the parent's function
+    setIsOpen(false); // Close the dropdown
+  };
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block w-full text-left" ref={dropdownRef}>
       {/* The Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center justify-center gap-x-2 rounded-md bg-lab-teal px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm transition hover:opacity-90"
+        className="inline-flex w-full items-center justify-between gap-x-2 rounded-md border border-muted/30 bg-primary/50 px-4 py-3 text-sm font-semibold text-neutral shadow-sm ring-1 ring-inset ring-transparent transition hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
       >
-        {t('labExercises')}
+        <span>{selectedExercise?.title || 'Select an Exercise'}</span>
         <ChevronDown 
-          className={clsx(
-            'h-5 w-5 transform transition-transform duration-200',
-            isOpen && 'rotate-180'
-          )} 
+          className={clsx('h-5 w-5 transform transition-transform duration-200', isOpen && 'rotate-180')} 
           aria-hidden="true" 
         />
       </button>
 
       {/* The Dropdown Panel */}
       {isOpen && (
-        <div className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="absolute left-0 z-10 mt-2 w-full origin-top-right rounded-md bg-primary/90 text-neutral shadow-lg ring-1 ring-black ring-opacity-5 backdrop-blur-md focus:outline-none">
           <div className="py-1">
             {exercises.map((exercise) => (
-              <Link
-                key={exercise.label}
-                href={exercise.href}
-                onClick={() => setIsOpen(false)} // Close on link click
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              <button
+                key={exercise.id}
+                onClick={() => handleSelect(exercise.id)}
+                className="flex w-full items-center justify-between px-4 py-2 text-left text-sm transition hover:bg-accent hover:text-primary"
+                role="menuitem"
               >
-                {exercise.label}
-              </Link>
+                <span>{exercise.title}</span>
+                {exercise.id === selectedId && <Check className="h-4 w-4" />}
+              </button>
             ))}
           </div>
         </div>

@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${outfit.variable} ${lato.variable} bg-gray-100 font-sans dark:bg-[#271F30]`}>
+      <body className={`${outfit.variable} ${lato.variable} font-sans bg-[#ffffff]`}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <MqttProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

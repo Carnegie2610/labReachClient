@@ -2,13 +2,19 @@
 import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { ReactNode } from 'react';
 
-export default function AuthLayout({
+// Define the props for the layout component
+interface LayoutProps {
+  children: ReactNode;
+  params: {
+    locale: string;
+  };
+}
+
+// Make the component async to match Next.js expectations
+export default async function AuthLayout({
   children,
   params: { locale }
-}: {
-  children: ReactNode;
-  params: { locale: string };
-}) {
+}: LayoutProps) {
   // CRITICAL STEP: `useMessages()` fetches the messages loaded by your `i18n.ts` config.
   // Without this, the provider has no translations to provide.
   const messages = useMessages();

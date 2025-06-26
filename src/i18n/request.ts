@@ -54,8 +54,8 @@ export default getRequestConfig(async ({ locale }: { locale?: string }) => {
       try {
         console.log(`Attempting to load ${namespace} for ${resolvedLocale}...`);
         // Ensure we get a plain object by using JSON.parse
-        const module = await import(`../../messages/${resolvedLocale}/${namespace}.json`);
-        messages[namespace] = JSON.parse(JSON.stringify(module.default || module));
+        const namespaceMessages = await import(`../../messages/${resolvedLocale}/${namespace}.json`);
+        messages[namespace] = JSON.parse(JSON.stringify(namespaceMessages.default || namespaceMessages));
         console.log(`Successfully loaded ${namespace} for ${resolvedLocale}`);
       } catch (error) {
         console.error(`Error loading ${namespace} for ${resolvedLocale}:`, error);
