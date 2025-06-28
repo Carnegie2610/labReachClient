@@ -1,33 +1,41 @@
 'use client';
 
 import { Rocket } from 'lucide-react';
-import { useMqtt } from '@/context/MqttContext';
+import { useMqtt } from '@/context/MqttContext'; // Assuming you have an MQTT context
 
-// --- Configuration ---
-const DEVICE_ID = 'esp32-alpha'; // This should ideally be dynamic if you have multiple devices
-const COMMAND_TOPIC = `labreach/sim/${DEVICE_ID}/command`;
+// Define the component's props
+interface RunExperimentButtonProps {
+  // A callback function to execute when the button is clicked
+  onClick: () => void;
+  // The name of the currently selected experiment to display on the button
+  experimentName: string;
+}
 
-export function CompileButton() {
-  const { publish, connectionStatus } = useMqtt();
+export function RunExperimentButton({ onClick, experimentName }: RunExperimentButtonProps) {
+  // We still need the MQTT context to know if we can enable the button
+  const { connectionStatus } = useMqtt();
   const isReady = connectionStatus === 'Connected';
 
-  const handleCompileClick = () => {
-    // THIS IS THE ONLY CHANGE NEEDED ON THE FRONTEND
-    // We now send a command specific to the blink experiment.
-    const payload = JSON.stringify({ experiment: 'blink', count: 10 });
-    
-    console.log(`Publishing command: ${payload}`);
-    publish(COMMAND_TOPIC, payload, 1);
+  const handleButtonClick = () => {
+    if (isReady) {
+      onClick(); // Execute the function passed from the parent
+    }
   };
 
   return (
     <button
-      onClick={handleCompileClick}
+      onClick={handleButtonClick}
       disabled={!isReady}
-      className="flex items-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white shadow transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+      className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-base font-bold text-white shadow-md transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-70"
     >
-      <Rocket size={18} />
-      {isReady ? 'Run Blink Experiment' : `MQTT: ${connectionStatus}`}
+      <Rocket size={20} />
+      {/* 
+        THE FIX: The button's text is now dynamic.
+        It uses the `experimentName` prop.
+      */}
+      <span>
+        {isReady ? `Run ${experimentName}` : `MQTT: ${connectionStatus}`}
+      </span>
     </button>
   );
 }

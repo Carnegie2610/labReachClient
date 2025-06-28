@@ -3,6 +3,8 @@
 export interface LabExerciseType {
     id: string;
     title: string;
+    componentName: string;
+    imageSrc: string;
     code: string;
   }
   
@@ -10,6 +12,8 @@ export interface LabExerciseType {
     {
       id: 'blink-led',
       title: '1. Blink an LED',
+      componentName: 'LED and Resistor Circuit',
+      imageSrc: '/images/lab/blinkLED.png',
       code: `#include <Arduino.h>
   
   // Define the pin for the built-in LED
@@ -36,6 +40,8 @@ export interface LabExerciseType {
     {
       id: 'lcd-display',
       title: '2. Hello World on LCD',
+      componentName: 'LCD Display',
+      imageSrc: '/images/lab/lcd-display.png',
       code: `#include <Wire.h> 
   #include <LiquidCrystal_I2C.h>
   
@@ -59,6 +65,8 @@ export interface LabExerciseType {
     {
       id: 'resistance-measurement',
       title: '3. Read Analog Voltage',
+      componentName: 'Analog Potentiometer',
+      imageSrc: '/images/lab/potentiometer.png',
       code: `#include <Arduino.h>
   
   // Analog pin to read from (e.g., a potentiometer)
