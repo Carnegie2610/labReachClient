@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
-import { registerUser } from '@/actions/auth'; // Import the server action
 
 const roles = ['student', 'instructor', 'technician'] as const;
 type Role = typeof roles[number];
@@ -28,20 +27,20 @@ export function RegisterForm() {
     setError(null);
     setSuccess(null);
 
-    const result = await registerUser({
-      email,
-      password,
-      fullName,
-      role: selectedRole,
-    });
+    // const result = await registerUser({
+    //   email,
+    //   password,
+    //   fullName,
+    //   role: selectedRole,
+    // });
 
     setIsLoading(false);
 
-    if (result.error) {
-      setError(result.error);
-    } else if (result.success) {
-      setSuccess(result.success);
-    }
+    // if (result.error) {
+    //   setError(result.error);
+    // } else if (result.success) {
+    //   setSuccess(result.success);
+    // }
   };
 
   // If registration is successful, show a success message instead of the form.

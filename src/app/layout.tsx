@@ -1,35 +1,39 @@
-import { Outfit, Lato } from 'next/font/google';
 import './globals.css';
 import NextTopLoader from 'nextjs-toploader';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { NextIntlClientProvider} from 'next-intl';
 import { MqttProvider } from '@/context/MqttContext';
-import { ThemeProvider } from '@/provider/ThemeProvider';
-
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
-const lato = Lato({ subsets: ['latin'], variable: '--font-lato', weight: ['700', '900'] });
+import { ThemeProvider } from '@/provider/ThemeProvider'; // Assuming your ThemeProvider is here
+import { getMessages } from 'next-intl/server';
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
   const messages = await getMessages();
+  const { locale } = await params;
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${outfit.variable} ${lato.variable} font-sans bg-[#ffffff]`}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <MqttProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <body>
+        {/*
+          This RootLayout is NOW a pure provider shell.
+          It contains NO UI components like Header, Footer, or <main>.
+          Its only job is to provide context to the entire application.
+        */}
+        <ThemeProvider> {/* This should contain your ThemeProvider */}
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <MqttProvider>
               <NextTopLoader color="#6DD3CE" showSpinner={false} />
-              {/* Children will be either the (main) layout or the (auth) layout */}
+              {/* 
+                The {children} here will be either the (main) layout or the (auth) layout.
+              */}
               {children}
-            </ThemeProvider>
-          </MqttProvider>
-        </NextIntlClientProvider>
+            </MqttProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
