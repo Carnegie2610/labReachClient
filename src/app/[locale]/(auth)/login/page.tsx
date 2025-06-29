@@ -1,12 +1,34 @@
-import { LoginForm } from '@/components/molecules/LoginForm';
+import { AuthHeader } from '@/components/organisms/AuthHeader';
+import { LoginForm } from '@/components/organisms/LoginForm';
+import Image from 'next/image';
 
-export default function LoginPage() {
-  // The layout file handles the main background and centering.
-  // This page component's only job is to provide the form.
-  // We use flexbox here again to ensure the form itself is centered within the main container.
+export default function RegisterPage() {
   return (
-    <div className="flex w-full items-center justify-center">
-      <LoginForm />
+    // This div represents the entire page structure for the register screen.
+    <div className="flex w-full flex-col">
+      {/* 
+        This page explicitly asks for the 'register' variant.
+        The header will now correctly show the "Sign In" button.
+      */}
+      <AuthHeader variant="login" />
+
+      <main className="flex flex-grow items-center justify-center p-4">
+        {/* The two-column layout for the registration form */}
+        <div className="grid w-full max-w-6xl grid-cols-1 lg:grid-cols-2">
+          <div className="relative hidden items-center justify-center rounded-l-lg bg-secondary/10 p-12 lg:flex">
+            <Image
+              src="/images/lab/registerimage.png"
+              width={500}
+              height={500}
+              alt="Illustration of a person working at a desk with electronics"
+              className="h-auto w-full"
+            />
+          </div>
+          <div className="flex w-full items-center justify-center bg-background p-8 lg:p-12">
+            <LoginForm />
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

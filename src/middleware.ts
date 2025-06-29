@@ -1,80 +1,59 @@
 // middleware.ts
 import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale, pathnames, Locale } from './i18n/routing';
 import { NextRequest, NextResponse } from 'next/server';
+import { locales, defaultLocale, pathnames } from './i18n/routing';
 import { getToken } from 'next-auth/jwt';
 
-// Type assertion for locale
-const assertLocale = (locale: string): locale is Locale => {
-  return locales.includes(locale as Locale);
-};
+// 1. Define your protected routes WITHOUT the [locale] prefix.
+const protectedRoutes = ['/reservation', '/dashboard', '/profile'];
 
-// Protected routes that require authentication
-const protectedRoutes = [
-  '/[locale]/dashboard',
-  '/[locale]/profile',
-  // Add more protected routes as needed
-];
+// 2. Create the specialized internationalization middleware from next-intl
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  pathnames, // Your pathnames for localized routes
+  localePrefix: 'always', // Always show the locale in the URL
+});
 
-// Wrap the middleware to handle cookie detection and auth
+// 3. This is your main middleware function
 export default async function middleware(request: NextRequest) {
+  // First, run the internationalization middleware
+  const response = intlMiddleware(request);
+
+  // Strip the locale from the pathname to check for protected routes
   const pathname = request.nextUrl.pathname;
+  const pathnameWithoutLocale = `/${pathname.split('/').slice(2).join('/')}`;
   
-  // Get locale from cookie
-  const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
-  
-  // Check if we need to redirect based on cookie or default locale
-  const targetLocale = localeCookie && assertLocale(localeCookie) 
-    ? localeCookie 
-    : defaultLocale;
+  const isProtectedRoute = protectedRoutes.some(route => pathnameWithoutLocale.startsWith(route));
 
-  // Check if the route is protected
-  const isProtectedRoute = protectedRoutes.some(route => 
-    pathname.startsWith(route.replace('[locale]', targetLocale))
-  );
-
-  // Check authentication for protected routes
   if (isProtectedRoute) {
     const token = await getToken({ req: request });
     if (!token) {
-      return NextResponse.redirect(new URL(`/${targetLocale}/auth/login`, request.url));
+      // Get the current locale from the original request path
+      const locale = pathname.split('/')[1] || defaultLocale;
+      // Redirect to the localized login page
+      const loginUrl = new URL(`/${locale}/login`, request.url);
+      return NextResponse.redirect(loginUrl);
     }
   }
 
-  // Don't redirect if already on correct locale path
-  const localePrefix = `/${targetLocale}`;
-  if (!pathname.startsWith(localePrefix) && 
-      !pathname.startsWith('/_next') && 
-      !pathname.startsWith('/login') && 
-      !pathname.startsWith('/register') && 
-      !pathname.startsWith('/reservation') && 
-      !pathname.startsWith('/Laboratory') && // Exclude CMS-like routes
-      !pathname.includes('.')) {
-    
-    // Redirect to the localized version of the page
-    const url = new URL(request.url);
-    url.pathname = `${localePrefix}${pathname === '/' ? '' : pathname}`;
-    return NextResponse.redirect(url);
-  }
-  
-  // If no locale cookie or already on correct path, use the next-intl middleware
-  const intlMiddleware = createMiddleware({
-    defaultLocale,
-    locales,
-    localePrefix: 'always',
-    pathnames
-  });
-  
-  return intlMiddleware(request);
+  // If the route is not protected or the user is authenticated, return the response from intlMiddleware
+  return response;
 }
+
+// ... your new config object from Step 1 goes here
 
 export const config = {
   matcher: [
-    // Exclude Payload admin, API routes, and CMS-like routes
-    '/((?!api|trpc|_next|_vercel|login|register|reservation|home|Laboratory|.*\\..*).*)',
-
-    // Include these specific locale patterns
-    '/',
-    '/(fr|en)/:path*',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     *
+     * This will correctly run the middleware on '/', '/home', '/login', etc.
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };

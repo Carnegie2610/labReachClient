@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 255 255 255;  /* #ffffff */
+  --foreground: 4 3 22;       /* #040316 */
 }
 
 @theme inline {
@@ -27,7 +27,49 @@ body {
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-background text-foreground;
+  };
+  :root{
+  --primary: 34 216 198;      /* #22d8c6 */
+  --primary-foreground: 4 3 22; /* Dark text on the light button */
+  --secondary: 74 74 125;     /* #4a4a7d */
+  --secondary-foreground: 234 233 252; /* Light text on the dark secondary button */
+  
+  --accent: 73 238 95;        /* #49ee5f */
+  --accent-foreground: 4 3 22;
+
+  /* --- Adding sensible defaults for other common variables --- */
+  --muted: 130 130 150;
+  --muted-foreground: 100 100 120;
+  --border: 220 220 230;
+  --input: 220 220 230;
+  --ring: 74 74 125; /* Focus ring color */
+}
+/* --- Dark Mode Variables --- */
+.dark {
+  --background: 0 0 0;        /* #000000 */
+  --foreground: 234 233 252;  /* #eae9fc */
+  
+  --primary: 34 216 198;      /* #22d8c6 */
+  --primary-foreground: 4 3 22;
+  
+  --secondary: 74 74 125;     /* #4a4a7d */
+  --secondary-foreground: 234 233 252;
+  
+  --accent: 73 238 95;        /* #49ee5f */   
+  --accent-foreground: 4 3 22;
+  
+  --muted: 50 50 70;
+  --muted-foreground: 150 150 170;
+  --border: 40 40 55;
+  --input: 40 40 55;
+  --ring: 34 216 198;
+}
+
+}
+@layer base {
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
