@@ -9,7 +9,7 @@ import { EspControlPanel } from '@/components/organisms/EspControlPanel';
 import { labExercises, getExerciseById } from '@/lib/lab-data';
 import { ExerciseDropdown } from '@/components/molecules/LabExerciseDropdown';
 import { RunExperimentButton } from '@/components/molecules/CompileButton';
-
+import { useMqtt } from '@/context/MqttContext'; // 
 const CodeMirror = dynamic(() => import('@uiw/react-codemirror'), { 
   ssr: false,
 });
@@ -22,7 +22,9 @@ export default function LaboratoryPage() {
   const [selectedExerciseId, setSelectedExerciseId] = useState(defaultExerciseId);
   const [code, setCode] = useState(defaultExercise.code);
   const [output, setOutput] = useState('// Compilation output will appear here...');
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const { publish, connectionStatus } = useMqtt();
+
   const currentExercise = getExerciseById(selectedExerciseId) || defaultExercise;
 
   // --- HANDLERS ALSO LIVE AT THE PAGE LEVEL ---
@@ -38,15 +40,53 @@ export default function LaboratoryPage() {
   const handleResetCode = () => setCode(currentExercise.code);
 
   const handleCompileAndRun = async () => {
-    // This function can now be smarter, first compiling and then sending the run command
-    setOutput('Compiling code...');
-    // Replace with your actual API call logic
-    await new Promise(res => setTimeout(res, 1500));
-    setOutput('✅ Success: Code compiled.\n\nNow sending to device...');
-    // In a real app, you would publish to MQTT here
-    await new Promise(res => setTimeout(res, 1000));
-    setOutput('✅ Success: Code compiled.\n\n🚀 Experiment running on device!');
+    setOutput('⚙️ Compiling code on server...');
+    setIsLoading(true); // Assuming you add an isLoading state
+
+    try {
+      // 1. Call your new backend API route
+      const response = await fetch('/api/compile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }), // Send the code from the editor state
+      });
+
+      const result = await response.json();
+
+      // 2. Handle the response from the server
+      if (!response.ok) {
+        // If the server returned an error (e.g., status 400), use its output
+        setOutput(`❌ Compilation Failed:\n\n${result.output || result.error}`);
+      } else {
+        // On success, show a success message
+        setOutput(`✅ Success: Code compiled successfully!\n\n${result.output}`);
+        
+        // --- THIS IS HOW YOU INTEGRATE THE MQTT COMMAND ---
+        // If compilation is successful, THEN we send the command to the device.
+        if (connectionStatus === 'Connected') {
+          const commandPayload = JSON.stringify({
+            experiment: currentExercise.id, // "blink-led"
+            count: 10
+          });
+          publish(`labreach/sim/esp32-alpha/command`, commandPayload, 1);
+          setOutput(prev => prev + '\n\n🚀 "Run" command sent to device!');
+        } else {
+          setOutput(prev => prev + '\n\n⚠️ Could not send "Run" command: Not connected to MQTT.');
+        }
+      }
+    } catch (error) {
+      console.error("Error calling compile API:", error);
+      setOutput('❌ Critical Error: Could not connect to the compilation service.');
+    } finally {
+      setIsLoading(false); // Stop the loading state
+    }
   };
+
+
+  const mappedExercises = labExercises.map(exercise => ({
+    id: exercise.id,
+    title: exercise.name
+  }));
 
   return (
     <main className="container mx-auto min-h-screen max-w-7xl px-4 py-8 text-neutral">
@@ -64,7 +104,7 @@ export default function LaboratoryPage() {
         <div className="flex flex-col space-y-4 lg:col-span-2">
         <div className="max-w-md">
              <ExerciseDropdown
-              exercises={labExercises}
+              exercises={mappedExercises}
               selectedId={selectedExerciseId}
               onSelect={handleSelectExercise}
             />
@@ -83,7 +123,7 @@ export default function LaboratoryPage() {
           <div className="flex items-center space-x-4">
             <RunExperimentButton
               onClick={handleCompileAndRun}
-              experimentName={currentExercise.title} // Pass the dynamic name here
+              experimentName={currentExercise.name} // Pass the dynamic name here
             />
             <Button variant="secondary" onClick={handleResetCode}>
               Reset Code

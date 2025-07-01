@@ -17,8 +17,13 @@ export function RunExperimentButton({ onClick, experimentName }: RunExperimentBu
   const isReady = connectionStatus === 'Connected';
 
   const handleButtonClick = () => {
+     // --- ADD THIS LOG ---
+     console.log(`Button clicked. Current MQTT status: '${connectionStatus}'`); 
     if (isReady) {
       onClick(); // Execute the function passed from the parent
+    }else{
+      // --- ADD THIS LOG ---
+      console.warn('Button clicked, but MQTT is not connected. Publish will be skipped.');
     }
   };
 

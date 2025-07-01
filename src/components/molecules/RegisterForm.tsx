@@ -9,7 +9,7 @@ const roles = ['student', 'instructor', 'technician'] as const;
 type Role = typeof roles[number];
 
 export function RegisterForm() {
-  const t = useTranslations('auth.RegisterPage');
+  const t = useTranslations('auth.Register');
   const locale = useLocale();
 
   const [fullName, setFullName] = useState('');

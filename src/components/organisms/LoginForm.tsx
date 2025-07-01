@@ -35,7 +35,7 @@ export function LoginForm() {
       if (email === 'Test@gmail.com' && password === 'test1234') {
         // Simulate successful login
         await new Promise(resolve => setTimeout(resolve, 1000));
-        router.push(`/${locale}/reservation`);
+        router.push(`/${locale}/laboratory`);
       } else {
         // Simulate failed login
         await new Promise(resolve => setTimeout(resolve, 1000));
