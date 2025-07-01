@@ -1,34 +1,34 @@
 import './globals.css';
-import { NextIntlClientProvider, useMessages } from 'next-intl';
 import { MqttProvider } from '@/context/MqttContext';
 import { Providers } from '@/app/providers'; // <-- IMPORT YOUR NEW PROVIDERS COMPONENT
+import { IntlProvider } from './components/IntlProvider';
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const messages = useMessages();
+  const { locale } = await params;
 
   return (
     // CRITICAL: Add suppressHydrationWarning to the <html> tag.
     // This is required by next-themes to prevent console errors.
     <html lang={locale} suppressHydrationWarning>
       <body>
-        {/*
+        {/**
           By placing Providers here, you ensure that EVERY page,
           whether in the (auth) group or (main) group,
           is wrapped by the ThemeProvider.
         */}
         <Providers>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+          <IntlProvider locale={locale}>
             <MqttProvider>
               {/* Children will be either the (main) layout or the (auth) layout */}
               {children}
             </MqttProvider>
-          </NextIntlClientProvider>
+          </IntlProvider>
         </Providers>
       </body>
     </html>

@@ -27,7 +27,7 @@ export function ExerciseSelector({ exercises, selectedId, onSelect }: ExerciseSe
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between rounded-md border bg-white px-4 py-2 text-left text-sm"
       >
-        <span>{selectedExercise ? selectedExercise.title : 'Select an exercise'}</span>
+        <span>{selectedExercise ? selectedExercise.name : 'Select an exercise'}</span>
         <ChevronDown className={clsx('h-4 w-4 transition-transform', isOpen && 'rotate-180')} />
       </button>
 
@@ -39,7 +39,7 @@ export function ExerciseSelector({ exercises, selectedId, onSelect }: ExerciseSe
               onClick={() => handleSelect(exercise.id)}
               className="flex w-full items-center px-4 py-2 text-left text-sm hover:bg-gray-100"
             >
-              <span className="flex-grow">{exercise.title}</span>
+              <span className="flex-grow">{exercise.name}</span>
               {exercise.id === selectedId && <Check className="h-4 w-4 text-blue-600" />}
             </button>
           ))}
