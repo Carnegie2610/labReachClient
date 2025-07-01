@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { exec } from 'child_process';
 // IMPORT 'mkdir' from fs/promises
-import { writeFile, unlink, mkdtemp, mkdir } from 'fs/promises';
+import { writeFile, mkdtemp, mkdir } from 'fs/promises';
 import path from 'path';
 import os from 'os';
 

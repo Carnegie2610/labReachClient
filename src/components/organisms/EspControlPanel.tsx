@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useMqtt, useSubscription } from '@/context/MqttContext'; // Assuming useSubscription exists
+import { useState } from 'react';
+import { useMqtt, useSubscription } from '@/context/MqttContext';
 import { Button } from '@/components/atoms/Button';
-import { Rocket, Server, Wifi, WifiOff, LoaderCircle } from 'lucide-react';
+import { Rocket, Server, Wifi, WifiOff } from 'lucide-react';
 
 // The types of messages we expect from the ESP32 on the status topic
 type DeviceStatus = 'online' | 'offline' | 'running' | 'complete' | 'connecting...';

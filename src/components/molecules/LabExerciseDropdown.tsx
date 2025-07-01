@@ -5,10 +5,9 @@ import { ChevronDown, Check } from 'lucide-react';
 import { clsx } from 'clsx';
 
 // Define the shape of the exercise data it will receive
-type Exercise = {
-  id: string;
-  title: string;
-};
+import { LabExerciseType } from '@/lib/lab-data';
+
+type Exercise = LabExerciseType;
 
 type ExerciseDropdownProps = {
   exercises: Exercise[];
@@ -46,7 +45,7 @@ export function ExerciseDropdown({ exercises, selectedId, onSelect }: ExerciseDr
         onClick={() => setIsOpen(!isOpen)}
         className="inline-flex w-full items-center justify-between gap-x-2 rounded-md border border-muted/30 bg-primary/50 px-4 py-3 text-sm font-semibold text-neutral shadow-sm ring-1 ring-inset ring-transparent transition hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
       >
-        <span>{selectedExercise?.title || 'Select an Exercise'}</span>
+        <span>{selectedExercise ? selectedExercise.name : 'Select an exercise'}</span>
         <ChevronDown 
           className={clsx('h-5 w-5 transform transition-transform duration-200', isOpen && 'rotate-180')} 
           aria-hidden="true" 
@@ -64,7 +63,7 @@ export function ExerciseDropdown({ exercises, selectedId, onSelect }: ExerciseDr
                 className="flex w-full items-center justify-between px-4 py-2 text-left text-sm transition hover:bg-accent hover:text-primary"
                 role="menuitem"
               >
-                <span>{exercise.title}</span>
+                <span>{exercise.name}</span>
                 {exercise.id === selectedId && <Check className="h-4 w-4" />}
               </button>
             ))}

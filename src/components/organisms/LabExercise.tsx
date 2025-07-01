@@ -70,7 +70,7 @@ export function LabExercise() {
             />
           </div>
           <div className="flex items-center space-x-2">
-            <RunExperimentButton onClick={handleCompile} experimentName={currentExercise.title} />
+            <RunExperimentButton onClick={handleCompile} experimentName={currentExercise.name} />
             <Button variant="secondary" onClick={handleResetCode}>
               Reset Code
             </Button>
