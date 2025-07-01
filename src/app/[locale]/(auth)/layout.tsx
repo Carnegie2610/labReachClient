@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     // This layout creates the centered container for your login/register forms.

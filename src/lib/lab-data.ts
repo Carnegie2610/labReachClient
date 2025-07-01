@@ -2,7 +2,7 @@
 
 export interface LabExerciseType {
     id: string;
-    title: string;
+    name: string;
     componentName: string;
     imageSrc: string;
     code: string;
@@ -11,35 +11,32 @@ export interface LabExerciseType {
   export const labExercises: LabExerciseType[] = [
     {
       id: 'blink-led',
-      title: '1. Blink an LED',
+      name: '1. Blink an LED',
       componentName: 'LED and Resistor Circuit',
       imageSrc: '/images/lab/blinkLED.png',
       code: `#include <Arduino.h>
-  
-  // Define the pin for the built-in LED
-  #define LED_PIN LED_BUILTIN
-  
-  void setup() {
-    // Initialize the LED pin as an output
-    pinMode(LED_PIN, OUTPUT);
-    Serial.begin(115200);
-  }
-  
-  void loop() {
-    // Turn the LED on
-    digitalWrite(LED_PIN, HIGH);
-    Serial.println("LED ON");
-    delay(1000); // Wait for a second
-  
-    // Turn the LED off
-    digitalWrite(LED_PIN, LOW);
-    Serial.println("LED OFF");
-    delay(1000); // Wait for a second
-  }`,
+  // Define the pin number for the LED
+const int ledPin = 14;
+
+void setup() {
+  // Initialize the LED pin as an output
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // Turn the LED on (HIGH is the voltage level)
+  digitalWrite(ledPin, HIGH);
+  // Wait for a second
+  delay(1000);
+  // Turn the LED off (LOW is the voltage level)
+  digitalWrite(ledPin, LOW);
+  // Wait for a second
+  delay(1000);
+}`,
     },
     {
       id: 'lcd-display',
-      title: '2. Hello World on LCD',
+      name: '2. Hello World on LCD',
       componentName: 'LCD Display',
       imageSrc: '/images/lab/lcd-display.png',
       code: `#include <Wire.h> 
@@ -64,7 +61,7 @@ export interface LabExerciseType {
     },
     {
       id: 'resistance-measurement',
-      title: '3. Read Analog Voltage',
+      name: '3. Read Analog Voltage',
       componentName: 'Analog Potentiometer',
       imageSrc: '/images/lab/potentiometer.png',
       code: `#include <Arduino.h>
