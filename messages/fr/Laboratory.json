@@ -5,28 +5,41 @@
     "laboratory": "Laboratoire",
     "contact": "Contact",
     "login": "Connexion",
-    "register": "Inscription"
+    "register": "S'inscrire"
   },
   "Footer": {
-      "pages": "Pages",
-      "usefulLinks": "Useful Links",
-      "login": "Login",
-      "register": "Register",
-      "reservationManagement": "Reservation Management",
-      "contact": "Contact",
-      "support": "Support",
-      "university": "University of Buea",
-      "twitter": "Twitter",
-      "youtube": "Youtube",
-      "informative": "Informative",
-      "privacy": "Privacy",
-      "orders": "Orders",
-      "copyright": "© {year} LabReach"
-    },
-    "Laboratory": {
-      "labExercises": "Lab Exercises",
-      "exercise1": "Introduction to Titration",
-      "exercise2": "Circuit Analysis",
-      "exercise3": "Organic Synthesis"
+    "pages": "Pages",
+    "usefulLinks": "Liens Utiles",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "reservationManagement": "Gestion des Réservations",
+    "contact": "Contact",
+    "support": "Support",
+    "university": "Université de Buea",
+    "twitter": "Twitter",
+    "youtube": "Youtube",
+    "informative": "Informatif",
+    "privacy": "Confidentialité",
+    "orders": "Commandes",
+    "copyright": "© {year} LabReach"
+  },
+  "LaboratoryPage": {
+    "title": "Bienvenue au Laboratoire",
+    "subtitle": "Sélectionnez un exercice dans le menu déroulant pour commencer.",
+    "outputTitle": "Sortie",
+    "blinkCountLabel": "Nombre de clignotements :",
+    "resetButton": "Réinitialiser le code",
+    "initialOutput": "// La sortie de la compilation apparaîtra ici...",
+    "exerciseLoaded": "// Nouvel exercice chargé. Prêt à compiler.",
+    "mqttConnectionError": "⚠️ Impossible d'envoyer la commande : Non connecté au MQTT.",
+    "sendingCommand": "🚀 Envoi de la commande à l'appareil...",
+    "commandSentSuccess": "\n\n✅ Commande envoyée avec succès !"
+  },
+  "Laboratory": {
+    "Exercises": {
+      "blink-led": "1. Faire clignoter une LED",
+      "lcd-display": "2. Hello World sur LCD",
+      "resistance-measurement": "3. Mesurer une tension analogique"
     }
+  }
 }
