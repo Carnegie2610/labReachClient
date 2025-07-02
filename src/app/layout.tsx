@@ -10,26 +10,26 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   // The manifest file for PWA capabilities
-  manifest: '/site.webmanifest',
+  manifest: 'site.webmanifest',
   
   // The icons property handles all your favicons
   icons: {
     // Standard favicon.ico
-    icon: 'favicon_io/favicon.ico',
+    icon: 'favicon.ico',
     
     // Favicons for different sizes (maps to <link rel="icon" ...>)
-    shortcut: 'favicon_io/favicon.ico', // Often used for older browsers
+    shortcut: 'favicon.ico', // Often used for older browsers
     other: [
       {
         rel: 'icon',
         type: 'image/png',
-        url: 'favicon_io/favicon-32x32.png',
+        url: 'favicon-32x32.png',
         sizes: '32x32',
       },
       {
         rel: 'icon',
         type: 'image/png',
-        url: 'favicon_io/favicon-16x16.png',
+        url: 'favicon-16x16.png',
         sizes: '16x16',
       },
     ],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     // Apple touch icon (maps to <link rel="apple-touch-icon" ...>)
     apple: [
       {
-        url: 'favicon_io/apple-touch-icon.png',
+        url: 'apple-touch-icon.png',
         sizes: '180x180',
         type: 'image/png',
       },
