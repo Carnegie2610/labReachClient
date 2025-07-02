@@ -1,32 +1,45 @@
 {
   "Header": {
-    "title": "Laboratoire",
-    "home": "Accueil",
-    "laboratory": "Laboratoire",
+    "title": "Laboratory",
+    "home": "Home",
+    "laboratory": "Laboratory",
     "contact": "Contact",
-    "login": "Connexion",
-    "register": "Inscription"
+    "login": "Login",
+    "register": "Register"
   },
   "Footer": {
-      "pages": "Pages",
-      "usefulLinks": "Useful Links",
-      "login": "Login",
-      "register": "Register",
-      "reservationManagement": "Reservation Management",
-      "contact": "Contact",
-      "support": "Support",
-      "university": "University of Buea",
-      "twitter": "Twitter",
-      "youtube": "Youtube",
-      "informative": "Informative",
-      "privacy": "Privacy",
-      "orders": "Orders",
-      "copyright": "© {year} LabReach"
-    },
-    "Laboratory": {
-      "labExercises": "Lab Exercises",
-      "exercise1": "Introduction to Titration",
-      "exercise2": "Circuit Analysis",
-      "exercise3": "Organic Synthesis"
+    "pages": "Pages",
+    "usefulLinks": "Useful Links",
+    "login": "Login",
+    "register": "Register",
+    "reservationManagement": "Reservation Management",
+    "contact": "Contact",
+    "support": "Support",
+    "university": "University of Buea",
+    "twitter": "Twitter",
+    "youtube": "Youtube",
+    "informative": "Informative",
+    "privacy": "Privacy",
+    "orders": "Orders",
+    "copyright": "© {year} LabReach"
+  },
+  "LaboratoryPage": {
+    "title": "Welcome to the Laboratory",
+    "subtitle": "Select an exercise from the dropdown to begin.",
+    "outputTitle": "Output",
+    "blinkCountLabel": "Blink Count:",
+    "resetButton": "Reset Code",
+    "initialOutput": "// Compilation output will appear here...",
+    "exerciseLoaded": "// New exercise loaded. Ready to compile.",
+    "mqttConnectionError": "⚠️ Could not send 'Run' command: Not connected to MQTT.",
+    "sendingCommand": "🚀 Sending 'Run' command to device...",
+    "commandSentSuccess": "\n\n✅ Command sent successfully!"
+  },
+  "Laboratory": {
+    "Exercises": {
+      "blink-led": "1. Blink an LED",
+      "lcd-display": "2. Hello World on LCD",
+      "resistance-measurement": "3. Read Analog Voltage"
     }
+  }
 }

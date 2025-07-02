@@ -13,6 +13,11 @@ const intlMiddleware = createMiddleware({
   defaultLocale,
   pathnames, // Your pathnames for localized routes
   localePrefix: 'always', // Always show the locale in the URL
+   // --- THIS IS THE CRUCIAL FIX ---
+  // This tells the middleware to not apply localization logic to requests
+  // that look like static assets. It ensures that requests for /images/...
+  // are not rewritten to /fr/images/...
+  localeDetection: false // Let's disable automatic locale detection for full control
 });
 
 // 3. This is your main middleware function
@@ -50,10 +55,9 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
+     * - images (your static image folder) <-- ADD THIS
      * - favicon.ico (favicon file)
-     *
-     * This will correctly run the middleware on '/', '/home', '/login', etc.
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|images|favicon.ico).*)',
   ],
 };
