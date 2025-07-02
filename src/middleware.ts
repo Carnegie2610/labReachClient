@@ -4,23 +4,23 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
 import { locales, defaultLocale, pathnames } from './i18n/routing';
 
-/**
- * Checks if the request is for a static asset.
- * These paths should be ignored by the middleware.
- * @param req The incoming NextRequest.
- * @returns boolean
- */
-function isStaticAssetRequest(req: NextRequest): boolean {
-  const { pathname } = req.nextUrl;
-  // Add any other static asset paths you need to exclude
-  const staticAssetPatterns = [
-    '/images/',
-    '/assets/',
-    '/fonts/',
-    '/videos/',
-  ];
-  return staticAssetPatterns.some(p => pathname.startsWith(p));
-}
+// /**
+//  * Checks if the request is for a static asset.
+//  * These paths should be ignored by the middleware.
+//  * @param req The incoming NextRequest.
+//  * @returns boolean
+//  */
+// function isStaticAssetRequest(req: NextRequest): boolean {
+//   const { pathname } = req.nextUrl;
+//   // Add any other static asset paths you need to exclude
+//   const staticAssetPatterns = [
+//     '/images/',
+//     '/assets/',
+//     '/fonts/',
+//     '/videos/',
+//   ];
+//   return staticAssetPatterns.some(p => pathname.startsWith(p));
+// }
 
 // Create the specialized internationalization middleware from next-intl
 const intlMiddleware = createMiddleware({
@@ -35,9 +35,9 @@ const intlMiddleware = createMiddleware({
 export default async function middleware(request: NextRequest) {
   // --- STEP 1: EXPLICITLY IGNORE STATIC ASSETS ---
   // If the request is for a static asset, do nothing and let Next.js handle it.
-  if (isStaticAssetRequest(request)) {
-    return; // Exit middleware early
-  }
+  // if (isStaticAssetRequest(request)) {
+  //   return; // Exit middleware early
+  // }
 
   // --- STEP 2: HANDLE LOCALIZATION (for page routes only) ---
   const response = intlMiddleware(request);
@@ -66,9 +66,19 @@ export default async function middleware(request: NextRequest) {
 // because our logic inside the function is smarter.
 export const config = {
   matcher: [
-    // Skip all internal Next.js assets
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-    // Match the root and all locale-prefixed paths
-    '/', '/(en|fr)/:path*'
-  ],
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - images (your own static asset folder)
+     * - fonts (your own static font folder)
+     * - assets (any other asset folder)
+     * - favicon.ico (favicon file)
+     *
+     * By explicitly ignoring '/images/', we prevent the middleware
+     * from ever touching the image URLs.
+     */
+    '/((?!api|_next/static|_next/image|images|fonts|assets|favicon.ico).*)'
+  ]
 };
