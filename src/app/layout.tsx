@@ -2,6 +2,50 @@ import './globals.css';
 import { MqttProvider } from '@/context/MqttContext';
 import { Providers } from '@/app/providers'; // <-- IMPORT YOUR NEW PROVIDERS COMPONENT
 import { IntlProvider } from './components/IntlProvider';
+import { Metadata } from 'next';
+
+// --- THIS IS THE NEW METADATA OBJECT ---
+// It translates your HTML <link> tags into a structured object.
+
+
+export const metadata: Metadata = {
+  // The manifest file for PWA capabilities
+  manifest: '/site.webmanifest',
+  
+  // The icons property handles all your favicons
+  icons: {
+    // Standard favicon.ico
+    icon: 'favicon_io/favicon.ico',
+    
+    // Favicons for different sizes (maps to <link rel="icon" ...>)
+    shortcut: 'favicon_io/favicon.ico', // Often used for older browsers
+    other: [
+      {
+        rel: 'icon',
+        type: 'image/png',
+        url: 'favicon_io/favicon-32x32.png',
+        sizes: '32x32',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        url: 'favicon_io/favicon-16x16.png',
+        sizes: '16x16',
+      },
+    ],
+    
+    // Apple touch icon (maps to <link rel="apple-touch-icon" ...>)
+    apple: [
+      {
+        url: 'favicon_io/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+};
+// --- END OF METADATA OBJECT ---
+
 
 export default async function RootLayout({
   children,
