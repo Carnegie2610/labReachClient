@@ -1,6 +1,83 @@
 {
-  "title": "Welcome to LabReach",
-  "subtitle": "Your trusted partner in laboratory solutions",
-  "cta": "Get Started",
-  "description": "Discover our comprehensive range of laboratory services and solutions"
+  "Hero": {
+    "heading_part1": "LabReach: Unleashing",
+    "heading_highlight": "Electronics",
+    "heading_part2": "Exploration Anywhere, Anytime",
+    "subheading": "LabReach: Unleashing Electronics Exploration Anywhere, Anytime",
+    "register_button": "Register",
+    "get_started_button": "Get Started"
+  },
+  "WhyChooseUs": {
+    "main_heading": "Why Choose Us ?",
+    "left_subheading": "Unreliable Traditional labs stalled learning",
+    "left_body": "Spotty internet and costly gear blocked hands-on electronics practice.",
+    "right_subheading": "LabReach sparks seamless exploration",
+    "right_body": "Affordable, low-bandwidth experiments with batch mode empower students anywhere."
+  },
+  "Benefits": {
+    "main_heading": "Benefits",
+    "cards": [
+      {
+        "paragraph": "Master electronics fundamentals with hands-on practice. From basic circuits to advanced microcontrollers, our platform provides a comprehensive learning experience.",
+        "list_items": [
+          "Real-time circuit simulation and testing",
+          "Interactive breadboard visualization",
+          "Component library with real-world specifications"
+        ],
+        "image": {
+          "src": "/images/home/benefit1.png",
+          "alt": "Students collaborating on electronics projects using LabReach platform"
+        }
+      },
+      {
+        "paragraph": "Our platform makes electronics learning accessible to everyone. No expensive equipment needed - just your computer and internet connection.",
+        "list_items": [
+          "Low-bandwidth experiments",
+          "Offline mode capability",
+          "Batch processing for complex simulations"
+        ],
+        "image": {
+          "src": "/images/home/benefit2.png",
+          "alt": "Student working on electronics project with LabReach interface"
+        }
+      },
+      {
+        "paragraph": "Engage with real-world electronics projects. Our platform connects theory with practice, making learning both practical and enjoyable.",
+        "list_items": [
+          "Pre-configured project templates",
+          "Step-by-step guided experiments",
+          "Community project sharing"
+        ],
+        "image": {
+          "src": "/images/home/benefit3.png",
+          "alt": "Student successfully completing an electronics project"
+        }
+      }
+    ]
+  },
+  "Faqs": {
+    "main_heading": "FAQ",
+    "items": [
+      {
+        "question": "What is LabReach and who is it for?",
+        "answer": "LabReach is a remote laboratory platform that allows students and hobbyists to access and control real electronics hardware (like ESP32s and Arduino boards) over the internet. It's designed for educational institutions, online courses, and anyone wanting hands-on practice without owning physical equipment."
+      },
+      {
+        "question": "What do I need to get started?",
+        "answer": "You just need a modern web browser and an internet connection. There is no software to install on your computer. All code compilation and interaction with the hardware is handled through our web interface."
+      },
+      {
+        "question": "What if I have a slow or unreliable internet connection?",
+        "answer": "LabReach is architected specifically for low-bandwidth environments. We use the efficient MQTT protocol for real-time communication, which uses significantly less data than video streaming. You can run experiments smoothly even on a slow connection."
+      },
+      {
+        "question": "Can I use my own code?",
+        "answer": "Absolutely. The laboratory interface includes a full code editor where you can write your own C++ code for Arduino, compile it on our secure server, and see the results on the physical hardware in real-time."
+      },
+      {
+        "question": "How is this different from a pure software simulation?",
+        "answer": "Simulations are great, but they can't replicate the nuances of real hardware—like voltage fluctuations, timing inconsistencies, or the simple satisfaction of seeing a physical LED light up. LabReach connects you to actual hardware for a true-to-life engineering experience."
+      }
+    ]
+  }
 }

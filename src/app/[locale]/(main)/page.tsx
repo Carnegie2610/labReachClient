@@ -1,17 +1,15 @@
-import Image from 'next/image'
-import React from 'react'
-const page = () => {
-  return (
-    <div>
-        <h1>hello this is the main page</h1>
-        <Image
-        src="/images/lab/blinkLED.png"
-        alt="Blink LED"
-        width={400}
-        height={300}
-      />
-        <div>hello this is the main page</div></div>
-  )
+import { HeroSection } from '@/components/organisms/HeroSection';
+import { WhyChooseUsSection } from '@/components/organisms/WhyChooseUsSection';
+import { BenefitsSection } from '@/components/organisms/BenefitsSection';
+import { FaqSection } from '@/components/organisms/FaqSection';
+export default function HomePage() {
+return (
+<div>
+<HeroSection />
+<WhyChooseUsSection />
+<BenefitsSection />
+<FaqSection />
+{/* Add other sections here */}
+</div>
+);
 }
-
-export default page
