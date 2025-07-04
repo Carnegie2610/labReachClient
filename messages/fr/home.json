@@ -1,6 +1,83 @@
 {
-  "title": "Bienvenue sur LabReach",
-  "subtitle": "Votre partenaire de confiance en solutions de laboratoire",
-  "cta": "Commencer",
-  "description": "Découvrez notre gamme complète de services et solutions de laboratoire"
+  "Hero": {
+    "heading_part1": "LabReach: Dévoilant",
+    "heading_highlight": "l'Électronique",
+    "heading_part2": "l'Exploration Partout, Tout le Temps",
+    "subheading": "LabReach: Dévoilant l'Exploration Électronique Partout, Tout le Temps",
+    "register_button": "S'inscrire",
+    "get_started_button": "Commencer"
+  },
+  "WhyChooseUs": {
+    "main_heading": "Pourquoi nous choisir ?",
+    "left_subheading": "Les laboratoires traditionnels freinent l'apprentissage",
+    "left_body": "Une connexion Internet inconstante et des pratiques pratiques d'électronique coûteuses et presque bloquées.",
+    "right_subheading": "LabReach stimule l'exploration fluide",
+    "right_body": "Des expériences abordables et à faible bande passante avec un mode par lots permettent aux étudiants de s'entraîner n'importe où."
+  },
+  "Benefits": {
+    "main_heading": "Avantages",
+    "cards": [
+      {
+        "paragraph": "Maîtrisez les fondamentaux de l'électronique avec une pratique pratique. De circuits basiques aux microcontrôleurs avancés, notre plateforme offre une expérience d'apprentissage complète.",
+        "list_items": [
+          "Simulation et test en temps réel des circuits",
+          "Visualisation interactive de la breadboard",
+          "Bibliothèque de composants avec spécifications réelles"
+        ],
+        "image": {
+          "src": "/images/home/benefit1.png",
+          "alt": "Des étudiants travaillant ensemble sur des projets électroniques avec la plateforme LabReach"
+        }
+      },
+      {
+        "paragraph": "Notre plateforme rend l'apprentissage de l'électronique accessible à tous. Pas besoin d'équipement coûteux - juste votre ordinateur et une connexion Internet.",
+        "list_items": [
+          "Expériences à faible bande passante",
+          "Mode hors ligne possible",
+          "Traitement par lots pour simulations complexes"
+        ],
+        "image": {
+          "src": "/images/home/benefit2.png",
+          "alt": "Étudiant travaillant sur un projet électronique avec l'interface LabReach"
+        }
+      },
+      {
+        "paragraph": "Engagez-vous dans des projets électroniques concrets. Notre plateforme relie la théorie à la pratique, rendant l'apprentissage à la fois pratique et agréable.",
+        "list_items": [
+          "Modèles de projets pré-configurés",
+          "Expériences guidées étape par étape",
+          "Partage de projets communautaires"
+        ],
+        "image": {
+          "src": "/images/home/benefit3.png",
+          "alt": "Étudiant réussissant un projet électronique"
+        }
+      }
+    ]
+  },
+  "Faqs": {
+    "main_heading": "FAQ",
+    "items": [
+      {
+        "question": "Qu'est-ce que LabReach et pour qui est-il conçu ?",
+        "answer": "LabReach est une plateforme de laboratoire à distance qui permet aux étudiants et aux passionnés d'accéder et de contrôler du matériel électronique réel (comme les ESP32 et les cartes Arduino) via Internet. Elle est conçue pour les institutions éducatives, les cours en ligne et toute personne souhaitant une pratique pratique sans posséder d'équipement physique."
+      },
+      {
+        "question": "Qu'ai-je besoin pour commencer ?",
+        "answer": "Il vous suffit d'un navigateur web moderne et d'une connexion Internet. Pas besoin d'installer de logiciel sur votre ordinateur. Toute la compilation du code et l'interaction avec le matériel se font via notre interface web."
+      },
+      {
+        "question": "Que faire si j'ai une connexion Internet lente ou instable ?",
+        "answer": "LabReach est spécialement conçu pour les environnements à faible bande passante. Nous utilisons le protocole MQTT efficace pour la communication en temps réel, qui utilise beaucoup moins de données qu'un flux vidéo. Vous pouvez exécuter des expériences en douceur même avec une connexion lente."
+      },
+      {
+        "question": "Puis-je utiliser mon propre code ?",
+        "answer": "Bien sûr. L'interface du laboratoire inclut un éditeur de code complet où vous pouvez écrire votre propre code C++ pour Arduino, le compiler sur notre serveur sécurisé et voir les résultats sur le matériel physique en temps réel."
+      },
+      {
+        "question": "Comment cela se différencie-t-il d'une simulation pure logicielle ?",
+        "answer": "Les simulations sont excellentes, mais elles ne peuvent pas reproduire les subtilités du matériel réel—comme les fluctuations de tension, les incohérences de timing ou la simple satisfaction de voir un LED physique s'allumer. LabReach vous connecte à du matériel réel pour une expérience d'ingénierie authentique."
+      }
+    ]
+  }
 }
